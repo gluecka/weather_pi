@@ -1,9 +1,12 @@
 import time
 from datetime import datetime
+import os
 import Adafruit_DHT
 from bmp280 import BMP280
 from smbus2 import SMBus
 from influxdb import InfluxDBClient
+from dotenv import load_dotenv
+load_dotenv()
 #import busio
 #import board
 #import adafruit_bmp280
@@ -12,12 +15,15 @@ pin_1 = 17 #innen
 pin_2 = 22 #außen
 bus = SMBus(1)
 #bus = busio.I2C(board.SCL, board.SDA)
+USER = os.environ.get('USER')
+PASSWORT = os.envion.get('PASSWORD')
+HOST = os.environ.get('HOST')
 
 sensor_dht = Adafruit_DHT.DHT22
 sensor_bmp = BMP280(i2c_dev=bus)
 #sensor_bmp = adafruit_bmp280.Adafruit_BMP280_I2C(bus, address=0x76)
 
-client = InfluxDBClient('rpiglueck1', 4000, 'glueck', 'Anaconda-1', 'wetterstation')
+client = InfluxDBClient(HOST, 4000, USER, PASSWORT, 'wetterstation')
 
 while True:
     hum_1, temp_1 = Adafruit_DHT.read_retry(sensor_dht, pin_1)
