@@ -1,4 +1,34 @@
-<h1> Wetterstation </h1>
+<h1>Weatherstation for a Raspberry PI-3</h1>
 
-<h2>Python File</h2>
+<h2>Python Version</h2>
 Python: 3.9.2
+
+<h2>Docker Images</h2>
+grafana/grafana:latest --> Februar 2024 <br>
+influxdb:1.8
+
+<h2>Sensor and Pin´s</h2>
+DHT-22 --> PIN 17 Measure inside<br>
+DHT-22 --> PIN 22 Measrue outside <br>
+BMP280 --> I2C Pressure Measure outside
+
+<h2>Description of the .env variables</h2>
+Create a file with name .env only <br>
+Content of this .env file: <br>
+
+- USER = 'Username of your inluxdb'
+- PASSWORD = 'Pasword of xou influxdb'
+- HOST = 'User of your local host'@'LAN IP adress of your local host'
+
+<h2>Description to installation</h2>
+Step by step instalation description of the weather station on your Raspberry PI: <br>
+
+1. Install docker on your Raspberry PI
+2. Activate i2c api in the Raspberry PI config.
+3. Create the .env file with all required parameters
+4. Handover the parameters of the .env file to deploy_influxdb.sh (password and username)
+5. Execute the .sh file to create all required volumes --> create_grafana_v.sh ; create_influxdb_v.sh
+6. Execute build-python_image.sh to build the docker image for the py-collector
+7. Execute the .sh file to create and start the docker container --> deply_grafana.sh ; deploy_py-collector.sh ; depoly_influxdb.sh
+<br><br>
+<b>The default login of grafana --> USER: admin PASWORD: admin
